@@ -27,15 +27,13 @@ const styles = {
   } as CSSProperties,
 };
 
-export function CSVReader() {
+export function CSVReader(props:{onUploadAccepted:Function}) {
   const {CSVReader} = useCSVReader();
 
   return (
     <CSVReader
-      onUploadAccepted={(results: {data: any[], errors: any[], meta: any}) => {
-        console.log('---------------------------');
-        console.log(results);
-        console.log('---------------------------');
+      onUploadAccepted={(results: CsvResult<any>) => {
+        props.onUploadAccepted(results);
       }}
       config={{header: true}}
     >
@@ -62,4 +60,37 @@ export function CSVReader() {
       )}
     </CSVReader>
   );
+}
+
+export interface CsvResult<T>{
+  data: T[]
+  errors: any[]
+  meta: any[]
+}
+
+export interface OOEvent {
+  id: string
+  user_id: string
+  time: string
+  lat: string
+  lng: string
+  type: string
+  inf: string
+  falsePositive: string
+  out: string
+  sim_id: string
+  peer_id: string
+  contact_length: string
+  quiz_id: string
+  modifier: string
+  score: string
+  max_strength: string
+}
+
+export interface Participant {
+  id: string
+  p2p_id: string
+  sim_id: string
+  group: string
+  random_id: string
 }
