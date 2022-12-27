@@ -27,7 +27,7 @@ const styles = {
   } as CSSProperties,
 };
 
-export function CSVReader(props:{onUploadAccepted:Function}) {
+export function CSVReader(props: {onUploadAccepted: Function}) {
   const {CSVReader} = useCSVReader();
 
   return (
@@ -62,7 +62,7 @@ export function CSVReader(props:{onUploadAccepted:Function}) {
   );
 }
 
-export interface CsvResult<T>{
+export interface CsvResult<T> {
   data: T[]
   errors: any[]
   meta: any[]
