@@ -7,7 +7,7 @@ import {ContactProcessor} from './contacts.processor';
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 
 export function Contacts(props: {contactStats: ContactStats}) {
-  const interval = 60*60 // 60seconds * 60minutes = 1 hour in secs
+  const interval = 60 * 60 // 60seconds * 60minutes = 1 hour in secs
   const labels: string[] = [];
   let x = 0;
   while (x * interval + props.contactStats.startTime <= props.contactStats.endTime) {
