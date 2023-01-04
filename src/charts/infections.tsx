@@ -1,9 +1,9 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
-import {CategoryScale, LinearScale, BarElement, Chart} from "chart.js";
+import {Line} from 'react-chartjs-2';
+import {CategoryScale, LinearScale, LineElement, PointElement, Chart} from "chart.js";
 import {Stat} from './stat'
 
-Chart.register(CategoryScale, LinearScale, BarElement);
+Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 
 
 /**
@@ -48,6 +48,6 @@ export function Infections(props: {infectionStats: Stat}) {
   }
   return (<>
     Infections loaded
-    <Bar data={data}> </Bar>
+    <Line data={data}> </Line>
   </>);
 }
