@@ -66,7 +66,13 @@ test('Contacts and overlaps are correctly calculated', () => {
     }
   ]
 
-  const ans = ContactProcessor.run({startTime: 0, endTime: 6, events, interval:1})
+  const ans = ContactProcessor.run({
+    startTime: 0,
+    endTime: 6,
+    events,
+    interval: 1,
+    labels: []
+  })
   expect(ans).toEqual([1, 2, 1, 1, 0, 1, 0])
 
 })

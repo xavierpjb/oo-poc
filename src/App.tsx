@@ -19,12 +19,22 @@ function App() {
         const timeSortedEvents = [...result.data].sort((e1, e2) => {
           return e1.time.localeCompare(e2.time)
         })
+        const interval = 60*60;
+        const startTime = parseInt(timeSortedEvents[0].time)
+        const endTime = parseInt(timeSortedEvents[timeSortedEvents.length - 1].time)
+        const labels: string[] = [];
+        let x = 0;
+        while (x * interval + startTime <= endTime) {
+          labels.push((x * interval + startTime).toString())
+          x += 1
+        }
 
         const baseStat: Stat = {
-          startTime: parseInt(timeSortedEvents[0].time),
-          endTime: parseInt(timeSortedEvents[timeSortedEvents.length - 1].time),
+          startTime,
+          endTime,
           events: [],
-          interval: 60 * 60 // 1 hour  in secs
+          interval,
+          labels
         }
 
         const infectionStats = {...baseStat};

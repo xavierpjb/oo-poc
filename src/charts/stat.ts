@@ -5,4 +5,5 @@ export interface Stat {
   endTime: number
   interval: number
   events: OOEvent[]
+  labels: string[]
 }

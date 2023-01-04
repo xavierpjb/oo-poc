@@ -7,16 +7,10 @@ Chart.register(CategoryScale, LinearScale, LineElement, PointElement, Legend);
 
 export function Sir(props: {sirStats: Stat}) {
   const interval = props.sirStats.interval
-  const labels: string[] = [];
-  let x = 0;
-  while (x * interval + props.sirStats.startTime <= props.sirStats.endTime) {
-    labels.push((x * interval + props.sirStats.startTime).toString())
-    x += 1
-  }
 
   const sirValues = SirProcessor.run(props.sirStats, interval)
   const data = {
-    labels,
+    labels: props.sirStats.labels,
     datasets: [
       {
         label: 'Susceptible',

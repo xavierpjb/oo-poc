@@ -17,22 +17,14 @@ export function Infections(props: {infectionStats: Stat}) {
   // Tiime intervals
   const interval = props.infectionStats.interval
 
-  // generate labels of said time intervals
-  const labels = [props.infectionStats.startTime.toString()];
-  let x = 1;
-  while (x * interval + props.infectionStats.startTime <= props.infectionStats.endTime) {
-    labels.push((x * interval + props.infectionStats.startTime).toString())
-    x += 1
-  }
-
   // Create a copy of infection event so we can remove the events already seen
   const infectionEvents = [...props.infectionStats.events]
   const data = {
-    labels,
+    labels:props.infectionStats.labels,
     datasets: [
       {
         label: 'Number of infections',
-        data: labels.map(label => {
+        data: props.infectionStats.labels.map(label => {
           const currInterval = parseInt(label)
           let numInf = 0
           while (infectionEvents.length > 0 && parseInt(infectionEvents[0].time) <= currInterval + interval) {

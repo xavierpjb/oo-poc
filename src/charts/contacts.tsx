@@ -7,16 +7,9 @@ import {ContactProcessor} from './contacts.processor';
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 
 export function Contacts(props: {contactStats: Stat}) {
-  const interval = props.contactStats.interval
-  const labels: string[] = [];
-  let x = 0;
-  while (x * interval + props.contactStats.startTime <= props.contactStats.endTime) {
-    labels.push((x * interval + props.contactStats.startTime).toString())
-    x += 1
-  }
   const contacts = ContactProcessor.run(props.contactStats)
   const data = {
-    labels,
+    labels:props.contactStats.labels,
     datasets: [
       {
         label: 'Contacts',
