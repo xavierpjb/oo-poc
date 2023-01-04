@@ -1,7 +1,8 @@
-import {SirStats, SirValue} from "./sir";
+import {SirValue} from "./sir";
+import {Stat} from './stat'
 
 export class SirProcessor {
-  public static run(sirStats: SirStats, interval: number) {
+  public static run(sirStats: Stat, interval: number) {
     const susceptible = new Set();
     const infected = new Set();
     const recovered = new Set();
@@ -9,7 +10,7 @@ export class SirProcessor {
     const dead = new Set();
 
     const sirValues: SirValue[] = [];
-    const timeSortedEvents = [...sirStats.sir]
+    const timeSortedEvents = [...sirStats.events]
 
     let x = 0
     while (x * interval + sirStats.startTime <= sirStats.endTime) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import {OOEvent} from '../csv_parser/csv_parser';
 import {Bar} from 'react-chartjs-2';
 import {CategoryScale, LinearScale, BarElement, Chart} from "chart.js";
+import {Stat} from './stat'
 
 Chart.register(CategoryScale, LinearScale, BarElement);
 
@@ -13,9 +13,9 @@ Chart.register(CategoryScale, LinearScale, BarElement);
  * of the number of infections before we encounter a time outside the intervals
  * we're searching for.
  */
-export function Infections(props: {infectionStats: InfectionStats}) {
+export function Infections(props: {infectionStats: Stat}) {
   // Tiime intervals
-  const interval = 100000
+  const interval = props.infectionStats.interval
 
   // generate labels of said time intervals
   const labels = [props.infectionStats.startTime.toString()];
@@ -26,7 +26,7 @@ export function Infections(props: {infectionStats: InfectionStats}) {
   }
 
   // Create a copy of infection event so we can remove the events already seen
-  const infectionEvents = [...props.infectionStats.infections]
+  const infectionEvents = [...props.infectionStats.events]
   const data = {
     labels,
     datasets: [
@@ -50,13 +50,4 @@ export function Infections(props: {infectionStats: InfectionStats}) {
     Infections loaded
     <Bar data={data}> </Bar>
   </>);
-
 }
-
-
-export interface InfectionStats {
-  startTime: number
-  endTime: number
-  infections: OOEvent[]
-}
-

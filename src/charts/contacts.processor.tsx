@@ -1,5 +1,5 @@
 import PriorityQueue from 'priority-queue-typescript';
-import {ContactStats} from './contacts';
+import {Stat} from './stat'
 import {OOEvent} from '../csv_parser/csv_parser';
 /**
  * Process a list of contact OOEvents and return the number of contacts over
@@ -18,14 +18,16 @@ import {OOEvent} from '../csv_parser/csv_parser';
  *
  */
 export class ContactProcessor {
-  public static run(contactStats: ContactStats, interval: number) {
+  public static run(contactStats: Stat) {
+    const interval = contactStats.interval;
+
     const pq = new PriorityQueue<OOEvent>(undefined,
       (e1: OOEvent, e2: OOEvent) =>
         parseInt(e1.time) - parseInt(e2.time)
     )
 
     const startTimeSortedEvents =
-      this.generateStartTimeSortedEvents(contactStats.contacts)
+      this.generateStartTimeSortedEvents(contactStats.events)
 
     let x = 0;
     const contacts: number[] = []
@@ -66,5 +68,4 @@ export class ContactProcessor {
     return parseInt(event.time) - parseInt(event.contact_length);
 
   }
-
 }

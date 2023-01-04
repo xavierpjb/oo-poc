@@ -1,12 +1,12 @@
 import React from 'react';
-import {OOEvent} from '../csv_parser/csv_parser';
 import {SirProcessor} from './sir.processor';
 import {CategoryScale, LinearScale, LineElement, PointElement, Chart, Legend} from "chart.js";
+import {Stat} from './stat'
 import {Line} from 'react-chartjs-2';
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement, Legend);
 
-export function Sir(props: {sirStats: SirStats}) {
-  const interval = 60 * 60 // 1 hours in secs
+export function Sir(props: {sirStats: Stat}) {
+  const interval = props.sirStats.interval
   const labels: string[] = [];
   let x = 0;
   while (x * interval + props.sirStats.startTime <= props.sirStats.endTime) {
@@ -66,12 +66,6 @@ export function Sir(props: {sirStats: SirStats}) {
     </>
   )
 
-}
-
-export interface SirStats {
-  startTime: number
-  endTime: number
-  sir: OOEvent[]
 }
 
 export interface SirValue {

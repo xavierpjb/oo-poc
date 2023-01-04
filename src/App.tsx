@@ -1,15 +1,16 @@
 import React, {useState} from "react";
 import {CSVReader, CsvResult, OOEvent, Participant} from "./csv_parser/csv_parser";
-import { Infections, InfectionStats } from "./charts/infections";
-import {Contacts, ContactStats} from "./charts/contacts";
-import {Sir, SirStats } from "./charts/sir";
+import {Infections} from "./charts/infections";
+import {Contacts} from "./charts/contacts";
+import {Sir} from "./charts/sir";
+import {Stat} from "./charts/stat";
 
 function App() {
   const [events, setEvents] = useState<OOEvent[]>();
   const [participants, setParticipants] = useState<Participant[]>();
-  const [infectionsStats, setInfectionsStats] = useState<InfectionStats>();
-  const [contactStats, setContactStats] = useState<ContactStats>();
-  const [sirStats, setSirStats] = useState<SirStats>();
+  const [infectionsStats, setInfectionsStats] = useState<Stat>();
+  const [contactStats, setContactStats] = useState<Stat>();
+  const [sirStats, setSirStats] = useState<Stat>();
 
   return (
     <>
@@ -19,39 +20,36 @@ function App() {
           return e1.time.localeCompare(e2.time)
         })
 
-        const infectionStats: InfectionStats = {
+        const baseStat: Stat = {
           startTime: parseInt(timeSortedEvents[0].time),
-          endTime: parseInt(timeSortedEvents[timeSortedEvents.length-1].time),
-          infections: []
+          endTime: parseInt(timeSortedEvents[timeSortedEvents.length - 1].time),
+          events: [],
+          interval: 60 * 60 // 1 hour  in secs
         }
-        const contactStats: ContactStats = {
-          startTime: parseInt(timeSortedEvents[0].time),
-          endTime: parseInt(timeSortedEvents[timeSortedEvents.length-1].time),
-          contacts: []
 
-        }
-        const sirStats: SirStats = {
-          startTime: parseInt(timeSortedEvents[0].time),
-          endTime: parseInt(timeSortedEvents[timeSortedEvents.length-1].time),
-          sir: []
+        const infectionStats = {...baseStat};
+        infectionStats.events = []
+        const contactStats = {...baseStat};
+        contactStats.events = []
+        const sirStats = {...baseStat};
+        sirStats.events = []
 
-        }
-        timeSortedEvents.forEach(event =>{
-          if (event.type === "infection"){
-            infectionStats.infections.push(event);
-            sirStats.sir.push(event)
+        timeSortedEvents.forEach(event => {
+          if (event.type === "infection") {
+            infectionStats.events.push(event);
+            sirStats.events.push(event)
           }
 
-          if (event.type === "contact"){
-            contactStats.contacts.push(event);
+          if (event.type === "contact") {
+            contactStats.events.push(event);
           }
 
           if (event.type === "join") {
-            sirStats.sir.push(event)
+            sirStats.events.push(event)
           }
 
           if (event.type === "outcome") {
-            sirStats.sir.push(event)
+            sirStats.events.push(event)
           }
         })
 
