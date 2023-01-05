@@ -11,4 +11,5 @@ export interface Stat {
     sir: OOEvent[]
   }
   labels: string[]
+  range: {start:number, end: number}
 }

@@ -76,7 +76,8 @@ test('Contacts and overlaps are correctly calculated', () => {
       sir: []
     },
     interval: 1,
-    labels: []
+    labels: [],
+    range:{start: 0, end: 7}
   })
   expect(ans).toEqual([1, 2, 1, 1, 0, 1, 0])
 

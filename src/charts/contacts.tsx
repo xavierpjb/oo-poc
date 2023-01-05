@@ -8,8 +8,9 @@ Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 
 export function Contacts(props: {contactStats: Stat}) {
   const contacts = ContactProcessor.run(props.contactStats)
+  const {start, end} = props.contactStats.range
   const data = {
-    labels:props.contactStats.labels,
+    labels:props.contactStats.labels.slice(start,end),
     datasets: [
       {
         label: 'Contacts',

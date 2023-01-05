@@ -4,6 +4,7 @@ import {Infections} from "./charts/infections";
 import {Contacts} from "./charts/contacts";
 import {Sir} from "./charts/sir";
 import {Stat} from "./charts/stat";
+import ReactSlider from "react-slider";
 
 function App() {
   const [participants, setParticipants] = useState<Participant[]>();
@@ -16,7 +17,7 @@ function App() {
         const timeSortedEvents = [...result.data].sort((e1, e2) => {
           return e1.time.localeCompare(e2.time)
         })
-        const interval = 60*60;
+        const interval = 60 * 60;
         const startTime = parseInt(timeSortedEvents[0].time)
         const endTime = parseInt(timeSortedEvents[timeSortedEvents.length - 1].time)
         const labels: string[] = [];
@@ -36,7 +37,11 @@ function App() {
             sir: [],
           },
           interval,
-          labels
+          labels,
+          range: {
+            start: 0,
+            end: labels.length
+          }
         }
 
         timeSortedEvents.forEach(event => {
@@ -71,9 +76,20 @@ function App() {
       {stat && <Contacts contactStats={stat}></Contacts>}
       {stat && <Sir sirStats={stat}></Sir>}
 
-
+      {stat && <ReactSlider
+        className="horizonal-slider"
+        marks
+        min={0}
+        max={stat.labels.length}
+        defaultValue={stat.labels.length}
+        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+        onAfterChange={(value) => {
+          setStat({...stat, range:{start:0, end: value}})
+        }}
+      ></ReactSlider>}
     </>
   );
+  // Create a slider which ranges between interval of #labels
 }
 
 export default App;

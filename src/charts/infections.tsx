@@ -16,18 +16,19 @@ Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 export function Infections(props: {infectionStats: Stat}) {
   // Tiime intervals
   const interval = props.infectionStats.interval
+  const {start, end} = props.infectionStats.range
 
   // Create a copy of infection event so we can remove the events already seen
   const infectionEvents = [...props.infectionStats.events.infections]
   const data = {
-    labels:props.infectionStats.labels,
+    labels:props.infectionStats.labels.slice(start,end),
     datasets: [
       {
         label: 'Number of infections',
         data: props.infectionStats.labels.map(label => {
           const currInterval = parseInt(label)
           let numInf = 0
-          while (infectionEvents.length > 0 && parseInt(infectionEvents[0].time) <= currInterval + interval) {
+          while (infectionEvents.length > 0 && parseInt(infectionEvents[0].time) < currInterval + interval) {
             numInf += 1
             infectionEvents.shift()
           }
