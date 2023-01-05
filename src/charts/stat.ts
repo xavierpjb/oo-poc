@@ -4,6 +4,11 @@ export interface Stat {
   startTime: number
   endTime: number
   interval: number
-  events: OOEvent[]
+  events: {
+    all: OOEvent[]
+    infections: OOEvent[]
+    contacts: OOEvent[]
+    sir: OOEvent[]
+  }
   labels: string[]
 }

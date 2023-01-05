@@ -18,7 +18,7 @@ export function Infections(props: {infectionStats: Stat}) {
   const interval = props.infectionStats.interval
 
   // Create a copy of infection event so we can remove the events already seen
-  const infectionEvents = [...props.infectionStats.events]
+  const infectionEvents = [...props.infectionStats.events.infections]
   const data = {
     labels:props.infectionStats.labels,
     datasets: [

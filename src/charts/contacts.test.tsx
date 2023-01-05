@@ -69,7 +69,12 @@ test('Contacts and overlaps are correctly calculated', () => {
   const ans = ContactProcessor.run({
     startTime: 0,
     endTime: 6,
-    events,
+    events: {
+      all: [],
+      infections: [],
+      contacts: events,
+      sir: []
+    },
     interval: 1,
     labels: []
   })

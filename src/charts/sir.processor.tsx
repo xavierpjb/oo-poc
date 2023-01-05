@@ -10,7 +10,7 @@ export class SirProcessor {
     const dead = new Set();
 
     const sirValues: SirValue[] = [];
-    const timeSortedEvents = [...sirStats.events]
+    const timeSortedEvents = [...sirStats.events.sir]
 
     let x = 0
     while (x * interval + sirStats.startTime <= sirStats.endTime) {

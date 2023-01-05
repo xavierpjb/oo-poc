@@ -27,7 +27,7 @@ export class ContactProcessor {
     )
 
     const startTimeSortedEvents =
-      this.generateStartTimeSortedEvents(contactStats.events)
+      this.generateStartTimeSortedEvents(contactStats.events.contacts)
 
     let x = 0;
     const contacts: number[] = []

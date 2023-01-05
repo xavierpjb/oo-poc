@@ -6,11 +6,8 @@ import {Sir} from "./charts/sir";
 import {Stat} from "./charts/stat";
 
 function App() {
-  const [events, setEvents] = useState<OOEvent[]>();
   const [participants, setParticipants] = useState<Participant[]>();
-  const [infectionsStats, setInfectionsStats] = useState<Stat>();
-  const [contactStats, setContactStats] = useState<Stat>();
-  const [sirStats, setSirStats] = useState<Stat>();
+  const [stat, setStat] = useState<Stat>();
 
   return (
     <>
@@ -29,44 +26,39 @@ function App() {
           x += 1
         }
 
-        const baseStat: Stat = {
+        const stat: Stat = {
           startTime,
           endTime,
-          events: [],
+          events: {
+            all: timeSortedEvents,
+            infections: [],
+            contacts: [],
+            sir: [],
+          },
           interval,
           labels
         }
 
-        const infectionStats = {...baseStat};
-        infectionStats.events = []
-        const contactStats = {...baseStat};
-        contactStats.events = []
-        const sirStats = {...baseStat};
-        sirStats.events = []
-
         timeSortedEvents.forEach(event => {
           if (event.type === "infection") {
-            infectionStats.events.push(event);
-            sirStats.events.push(event)
+            stat.events.infections.push(event)
+            stat.events.sir.push(event)
           }
 
           if (event.type === "contact") {
-            contactStats.events.push(event);
+            stat.events.contacts.push(event)
           }
 
           if (event.type === "join") {
-            sirStats.events.push(event)
+            stat.events.sir.push(event)
           }
 
           if (event.type === "outcome") {
-            sirStats.events.push(event)
+            stat.events.sir.push(event)
           }
         })
 
-        setInfectionsStats(infectionStats);
-        setContactStats(contactStats)
-        setEvents(timeSortedEvents);
-        setSirStats(sirStats);
+        setStat(stat)
 
       }}></CSVReader>
 
@@ -75,9 +67,9 @@ function App() {
         setParticipants(result.data)
       }}></CSVReader>
 
-      {infectionsStats && <Infections infectionStats={infectionsStats}></Infections>}
-      {contactStats && <Contacts contactStats={contactStats}></Contacts>}
-      {sirStats && <Sir sirStats={sirStats}></Sir>}
+      {stat && <Infections infectionStats={stat}></Infections>}
+      {stat && <Contacts contactStats={stat}></Contacts>}
+      {stat && <Sir sirStats={stat}></Sir>}
 
 
     </>
