@@ -1,20 +1,18 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
 import {CategoryScale, LinearScale, LineElement, PointElement, Chart} from "chart.js";
-import {Stat} from './stat'
-import {ContactProcessor} from './contacts.processor';
+import {ChartData, Stat} from './stat'
 
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement);
 
-export function Contacts(props: {contactStats: Stat}) {
-  const contacts = ContactProcessor.run(props.contactStats)
-  const {start, end} = props.contactStats.range
-  const data = {
-    labels:props.contactStats.labels.slice(start,end),
+export function Contacts(props: {chartData: ChartData<number>}) {
+  const {labels, data} = props.chartData
+  const lineData = {
+    labels,
     datasets: [
       {
         label: 'Contacts',
-        data: contacts,
+        data,
         backgroundColor: "#4682B4",
       }
     ]
@@ -23,7 +21,7 @@ export function Contacts(props: {contactStats: Stat}) {
   return (
     <>
       Contacts
-      <Line data={data}></Line>
+      <Line data={lineData}></Line>
     </>
   )
 }

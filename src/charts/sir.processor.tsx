@@ -2,7 +2,9 @@ import {SirValue} from "./sir";
 import {Stat} from './stat'
 
 export class SirProcessor {
-  public static run(sirStats: Stat, interval: number) {
+  public static run(sirStats: Stat) {
+    const interval = sirStats.interval;
+
     const susceptible = new Set();
     const infected = new Set();
     const recovered = new Set();

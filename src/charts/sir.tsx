@@ -1,40 +1,37 @@
 import React from 'react';
-import {SirProcessor} from './sir.processor';
 import {CategoryScale, LinearScale, LineElement, PointElement, Chart, Legend} from "chart.js";
-import {Stat} from './stat'
+import {ChartData} from './stat'
 import {Line} from 'react-chartjs-2';
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement, Legend);
 
-export function Sir(props: {sirStats: Stat}) {
-  const interval = props.sirStats.interval
-  const {start, end} = props.sirStats.range
-  const sirValues = SirProcessor.run(props.sirStats, interval)
-  const data = {
-    labels: props.sirStats.labels.slice(start,end),
+export function Sir(props: {chartData: ChartData<SirValue>}) {
+  const {labels, data} = props.chartData
+  const lineData = {
+    labels,
     datasets: [
       {
         label: 'Susceptible',
-        data: sirValues.map(val => val.susceptible),
+        data: data.map(val => val.susceptible),
         backgroundColor: "#4682B4", // Blue
       },
       {
         label: 'Infected',
-        data: sirValues.map(val => val.infected),
+        data: data.map(val => val.infected),
         backgroundColor: "#FF0000", // Red
       },
       {
         label: 'Recovered',
-        data: sirValues.map(val => val.recovered),
+        data: data.map(val => val.recovered),
         backgroundColor: "#2E8B57", // Green
       },
       {
         label: 'Vaccinated',
-        data: sirValues.map(val => val.vaccinated),
+        data: data.map(val => val.vaccinated),
         backgroundColor: "#9932CC", // Purple
       },
       {
         label: 'Dead',
-        data: sirValues.map(val => val.dead),
+        data: data.map(val => val.dead),
         backgroundColor: "#808080", // Grey
       }
 
@@ -43,7 +40,7 @@ export function Sir(props: {sirStats: Stat}) {
   return (
     <>
       SIR
-      <Line data={data} options={
+      <Line data={lineData} options={
         {
           plugins: {
             legend: {
@@ -59,7 +56,6 @@ export function Sir(props: {sirStats: Stat}) {
       }></Line>
     </>
   )
-
 }
 
 export interface SirValue {
